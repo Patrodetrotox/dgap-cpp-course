@@ -36,28 +36,23 @@ void ListQueue::enqueue(const data& a) {
 }
 
 data ListQueue::dequeue() {
-	try {
-		if(length == 0u) {
-			throw runtime_error("Empty queue!");
-		}
 
-		Node buf = *head;
-		if(length == 1u) {
-			delete head;
-			head = NULL;
-			last = NULL;
-		} else {
-			delete head;
-			head = buf.rhs;
-			head->lhs = NULL;
-		}
-		length--;
-		return buf.val;
-
-	} catch (runtime_error& er) {
-		cerr << endl << "Error: " << er.what() << endl;
-		return 0;
+	if(length == 0u) {
+		throw runtime_error("Empty queue!");
 	}
+
+	Node buf = *head;
+	if(length == 1u) {
+		delete head;
+		head = NULL;
+		last = NULL;
+	} else {
+		delete head;
+		head = buf.rhs;
+		head->lhs = NULL;
+	}
+	length--;
+	return buf.val;
 }
 
 unsigned ListQueue::getLength() {

@@ -1,29 +1,13 @@
-
 #include <iostream>
 #include "queue.h"
 
+using namespace std;
 
-int main()
-{
-    char c;
-    std::cout << "Type of queue (a - array, l - list): ";
-    std::cin >> c;
-    
-    BasicQueue *queue = NULL;
-    if (c == 'a')
-        queue = new ArrayQueue;
-    else if (c == 'l')
-        queue = new ListQueue;
-    else {
-        std::cout << "Bad type, exit" << std::endl;
-        return 1;
-    }
-
-    /*
-     * Put here your tests: en/dequeue large number of elements
-     */
-
-    delete queue;
+int main() {
+	ListQueue q;
+	q.enqueue(5);
+	q.enqueue(4);
+	q.enqueue(3);
+	cout << q.dequeue() << " " << q.dequeue() << " " << q.dequeue() << " " << q.dequeue() << endl;
     return 0;
 }
-
