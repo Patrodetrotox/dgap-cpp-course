@@ -87,10 +87,14 @@ public:
 	data dequeue() override;
 
 	unsigned getLength() override {
-		if( last >= first) {
+		if( last > first) {
 			return last - first + 1;
-		} else {
+		} else if( last < first){
 			return (N - first + 1 + last);   // (N - first) elements before N and (last + 1) elements before last (including 0)
+		} else if(is_empty) {
+			return 0;
+		} else {
+			return 1;
 		}
 	}
 
