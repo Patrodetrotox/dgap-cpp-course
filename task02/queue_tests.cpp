@@ -275,3 +275,219 @@ void ArrayQueueTest() {
 		}
 	}
 }
+
+void BasicQueueTest() {
+	string testName;
+	{
+		try {
+			testName = "First Basic Queue test {List based}";
+			ListQueue<int> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			pq->enqueue(2);
+			Assert(pq->dequeue(), 1, testName);
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+
+	{
+		try {
+			testName = "Second Basic Queue test {List based}";
+			ListQueue<int> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			Assert(pq->dequeue(), 1, testName);
+			pq->dequeue();
+			throw runtime_error("Assertion failed: expected exception wasn't thrown in " + testName);
+		} catch(range_error& er) {
+		}
+	}
+
+	{
+		try {
+			testName = "Third Basic Queue test {List based}";
+			ListQueue<int> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			pq->enqueue(2);
+			Assert(pq->dequeue(), 1, testName);
+			Assert(pq->dequeue(), 2, testName);
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+
+	{
+		try {
+			testName = "Fourth Basic Queue test {List based}";
+			ListQueue<int> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			pq->enqueue(2);
+			Assert(pq->dequeue(), 1, testName);
+			Assert(pq->dequeue(), 2, testName);
+			pq->dequeue();
+			throw runtime_error("Assertion failed: expected exception wasn't thrown in " + testName);
+		} catch(range_error& er) {
+		}
+	}
+
+	{
+		try {
+			testName = "First Basic Queue test {Array based}";
+			ArrayQueue<int, 4> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			pq->enqueue(2);
+			Assert(pq->dequeue(), 1, testName);
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+
+	{
+		try {
+			testName = "Second Basic Queue test {Array based}";
+			ArrayQueue<int, 4> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			pq->enqueue(2);
+			Assert(pq->dequeue(), 1, testName);
+			Assert(pq->dequeue(), 2, testName);
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+
+	{
+		try {
+			testName = "Third Basic Queue test {Array based}";
+			ArrayQueue<int, 4> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			pq->enqueue(2);
+			Assert(pq->dequeue(), 1, testName);
+			Assert(pq->dequeue(), 2, testName);
+			pq->dequeue();
+			throw runtime_error("Assertion failed: expected exception wasn't thrown in " + testName);
+		} catch(range_error& er) {
+		}
+	}
+
+	{
+		try {
+			testName = "Fourth Basic Queue test {Array based}";
+			ArrayQueue<int, 4> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			pq->enqueue(2);
+			pq->enqueue(3);
+			pq->enqueue(4);
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+
+	{
+		try {
+			testName = "Fiveth Basic Queue test {Array based}";
+			ArrayQueue<int, 4> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			pq->enqueue(2);
+			pq->enqueue(3);
+			pq->enqueue(4);
+			pq->enqueue(5);
+			throw runtime_error("Assertion failed: expected exception wasn't thrown in " + testName);
+		} catch(range_error& er) {
+		}
+	}
+
+	{
+		try {
+			testName = "Sixth Basic Queue test {Array based}";
+			ArrayQueue<int> q;
+			BasicQueue<int>* pq = &q;
+			for(int i = 1; i <= 64; i++){
+				pq->enqueue(i);
+			}
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+
+	{
+		try {
+			testName = "Seventh Basic Queue test {Array based}";
+			ArrayQueue<int> q;
+			BasicQueue<int>* pq = &q;
+			for(int i = 1; i <= 65; i++){
+				pq->enqueue(i);
+			}
+			throw runtime_error("Assertion failed: expected exception wasn't thrown in " + testName);
+		} catch(range_error& er) {
+		}
+	}
+
+	{
+		try {
+			testName = "First Basic Queue test {Length}";
+			ListQueue<int> q;
+			BasicQueue<int>* pq = &q;
+			Assert(pq->getLength(), 0u, testName);
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+
+	{
+		try {
+			testName = "Second Basic Queue test {Length}";
+			ListQueue<int> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			Assert(pq->getLength(), 1u, testName);
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+
+	{
+		try {
+			testName = "Third Basic Queue test {Length}";
+			ArrayQueue<int> q;
+			BasicQueue<int>* pq = &q;
+			Assert(pq->getLength(), 0u, testName);
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+
+	{
+		try {
+			testName = "Fourth Basic Queue test {Length}";
+			ArrayQueue<int> q;
+			BasicQueue<int>* pq = &q;
+			pq->enqueue(1);
+			Assert(pq->getLength(), 1u, testName);
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+
+	{
+		try {
+			testName = "Fiveth Basic Queue test {Length}";
+			ArrayQueue<int> q1;
+			ListQueue<int> q2;
+			BasicQueue<int>* pq1 = &q1;
+			BasicQueue<int>* pq2 = &q2;
+			pq1->enqueue(1);
+			pq2->enqueue(2);
+			Assert(pq1->getLength(), pq2->getLength(), testName);
+		} catch(range_error& er) {
+			throw runtime_error("Assertion failed: thrown unexpected exception in " + testName);
+		}
+	}
+}

@@ -8,6 +8,7 @@ void TestAll() {
 	TestRunner tr;
 	tr.RunTest(ListQueueTest, "List based queue test");
 	tr.RunTest(ArrayQueueTest, "Array based queue test");
+	tr.RunTest(BasicQueueTest, "Basic queue test");
 }
 
 int main() {

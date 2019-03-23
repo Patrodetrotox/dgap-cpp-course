@@ -4,28 +4,10 @@
 #include<exception>
 
 template <typename data>
-struct Node {
-
-	Node():
-		val(0),
-		rhs(NULL),
-		lhs(NULL) {
-	}
-
-	Node(const data& a, Node* l = NULL, Node* r = NULL):
-		val(a),
-		lhs(l),
-		rhs(r) {
-	}
-
-	data val;
-	Node<data>* lhs;
-	Node<data>* rhs;
-};
-
-template <typename data>
 class BasicQueue {
 public:
+
+
 
 	// Add element to the end
 	virtual void enqueue(const data& a) = 0;
@@ -42,6 +24,27 @@ protected:
 template <typename data>
 class ListQueue: public BasicQueue<data> {
 public:
+
+
+	template <typename data2>
+	struct Node {
+
+			Node():
+				val(0),
+				rhs(NULL),
+				lhs(NULL) {
+			}
+
+			Node(const data2& a, Node* l = NULL, Node* r = NULL):
+				val(a),
+				lhs(l),
+				rhs(r) {
+			}
+
+			data2 val;
+			Node<data2>* lhs;
+			Node<data2>* rhs;
+		};
 
 	ListQueue():
 		head(NULL),

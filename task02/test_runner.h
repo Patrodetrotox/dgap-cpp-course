@@ -44,3 +44,5 @@ private:
 void ListQueueTest();
 
 void ArrayQueueTest();
+
+void BasicQueueTest();
