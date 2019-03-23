@@ -25,27 +25,6 @@ template <typename data>
 class ListQueue: public BasicQueue<data> {
 public:
 
-
-	template <typename data2>
-	struct Node {
-
-			Node():
-				val(0),
-				rhs(NULL),
-				lhs(NULL) {
-			}
-
-			Node(const data2& a, Node* l = NULL, Node* r = NULL):
-				val(a),
-				lhs(l),
-				rhs(r) {
-			}
-
-			data2 val;
-			Node<data2>* lhs;
-			Node<data2>* rhs;
-		};
-
 	ListQueue():
 		head(NULL),
 		last(NULL),
@@ -70,6 +49,26 @@ public:
 	}
 
 private:
+
+	template <typename data2>
+	struct Node {
+
+		Node():
+			val(0),
+			rhs(NULL),
+			lhs(NULL) {
+		}
+
+		Node(const data2& a, Node* l = NULL, Node* r = NULL):
+			val(a),
+			lhs(l),
+			rhs(r) {
+		}
+		data2 val;
+		Node<data2>* lhs;
+		Node<data2>* rhs;
+	};
+
 	Node<data>* head;  //first to leave
 	Node<data>* last;  // last to leave (tail)
 	unsigned length;
