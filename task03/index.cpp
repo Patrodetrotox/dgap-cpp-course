@@ -15,6 +15,9 @@
 #include <Windows.h>
 #endif
 
+#define MAX_LENGTH_OF_NAME 50
+#define MAX_LENGTH_OF_PATH 100
+
 using namespace std;
 
 #ifdef __linux__
@@ -55,7 +58,7 @@ vector<file_info*> read_directory(string path)
 	HANDLE hFind = FindFirstFile((path + '*').c_str(), &fd);
 	if (hFind == INVALID_HANDLE_VALUE)
 		return vector<file_info*>();
-    
+
 	vector<file_info*> vec;
 	do {
 		file_info *info = new file_info;
@@ -91,12 +94,12 @@ std::pair<unsigned, unsigned> MaxLength(const std::map<std::string, std::shared_
 			maxN = sizeN;
 		}
 	}
-	if(maxN > 50) {
-		maxN = 50;
+	if(maxN > MAX_LENGTH_OF_NAME) {
+		maxN = MAX_LENGTH_OF_NAME;
 	}
 
-	if(maxP > 100) {
-		maxP = 100;
+	if(maxP > MAX_LENGTH_OF_PATH) {
+		maxP = MAX_LENGTH_OF_PATH;
 	}
 
 	return std::make_pair(maxP, maxN);
@@ -140,14 +143,14 @@ void FileIndexer::PrintFiles() {
 		strTime.erase(strTime.find('\n'));
 		cout.setf(ios::left);
 		cout << setw(m_nameLength);
-		if(i.second->name.size() > 47) {
-			cout << i.second->name.substr(0, 47) + "...";
+		if(i.second->name.size() > MAX_LENGTH_OF_NAME) {
+			cout << i.second->name.substr(0, MAX_LENGTH_OF_NAME - 3) + "...";
 		} else {
 			cout << i.second->name;
 		}
 		cout << "  " << setw(m_pathLength);
-		if(i.first.size() > 97) {
-			cout << i.first.substr(0, 97) + "...";
+		if(i.first.size() > MAX_LENGTH_OF_PATH) {
+			cout << i.first.substr(0, MAX_LENGTH_OF_PATH - 3) + "...";
 		} else {
 			cout << i.first;
 		}
@@ -175,14 +178,14 @@ void FileIndexer::PrintFilesSorted(SortingType type) {
 		strTime.erase(strTime.find('\n'));
 		cout.setf(ios::left);
 		cout << setw(m_nameLength);
-		if(i->name.size() > 47) {
-			cout << i->name.substr(0, 47) + "...";
+		if(i->name.size() > MAX_LENGTH_OF_NAME) {
+			cout << i->name.substr(0, MAX_LENGTH_OF_NAME - 3) + "...";
 		} else {
 			cout << i->name;
 		}
 		cout << "  " << setw(m_pathLength);
-		if(i->path.size() > 97) {
-			cout << i->path.substr(0, 97) + "...";
+		if(i->path.size() > MAX_LENGTH_OF_PATH) {
+			cout << i->path.substr(0, MAX_LENGTH_OF_PATH - 3) + "...";
 		} else {
 			cout << i->path;
 		}
@@ -224,14 +227,14 @@ unsigned FileIndexer::FindFiles(const std::string &pattern) {
 			strTime.erase(strTime.find('\n'));
 			cout.setf(ios::left);
 			cout << setw(m_nameLength);
-			if(i.second->name.size() > 47) {
-				cout << i.second->name.substr(0, 47) + "...";
+			if(i.second->name.size() > MAX_LENGTH_OF_NAME) {
+				cout << i.second->name.substr(0, MAX_LENGTH_OF_NAME - 3) + "...";
 			} else {
 				cout << i.second->name;
 			}
 			cout << "  " << setw(m_pathLength);
-			if(i.first.size() > 97) {
-				cout << i.first.substr(0, 97) + "...";
+			if(i.first.size() > MAX_LENGTH_OF_PATH) {
+				cout << i.first.substr(0, MAX_LENGTH_OF_PATH - 3) + "...";
 			} else {
 				cout << i.first;
 			}
