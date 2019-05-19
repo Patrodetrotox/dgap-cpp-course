@@ -105,6 +105,28 @@ std::pair<unsigned, unsigned> MaxLength(const std::map<std::string, std::shared_
 	return std::make_pair(maxP, maxN);
 }
 
+void InfoOutput(shared_ptr<file_info> info, const int& max_name, const int& max_path) {
+	time_t t = info->mtime;
+	string strTime = ctime(&t);
+	strTime.erase(strTime.find('\n'));
+	cout.setf(ios::left);
+	cout << setw(max_name);
+	if(info->name.length() > MAX_LENGTH_OF_NAME) {
+		cout << info->name.substr(0, MAX_LENGTH_OF_NAME - 3) + "...";
+	} else {
+		cout << info->name;
+	}
+	cout << "  " << setw(max_path);
+	if(info->path.length() > MAX_LENGTH_OF_PATH) {
+		cout << info->path.substr(0, MAX_LENGTH_OF_PATH - 3) + "...";
+	} else {
+		cout << info->path;
+	}
+	cout << "  " << setw(26) << strTime << "  " << setw(9);  //9 = max{size("directory"), size("regular")}
+	info->type == file_type::ft_dir ? cout << "directory" : cout << "regular";
+	cout << "  " << setw(20) << info->size << endl;  // name -- path -- time -- type -- size  // 20 - length of max uint64_t (18446744073709551615)
+}
+
 bool NameCmp(const shared_ptr<file_info>& lhs, const shared_ptr<file_info>& rhs) {
 	return lhs->name < rhs->name;
 }
@@ -138,25 +160,7 @@ unsigned FileIndexer::Build() {
 
 void FileIndexer::PrintFiles() {
 	for(const auto& i: m_index) {
-		time_t t = i.second->mtime;
-		string strTime = ctime(&t);
-		strTime.erase(strTime.find('\n'));
-		cout.setf(ios::left);
-		cout << setw(m_nameLength);
-		if(i.second->name.size() > MAX_LENGTH_OF_NAME) {
-			cout << i.second->name.substr(0, MAX_LENGTH_OF_NAME - 3) + "...";
-		} else {
-			cout << i.second->name;
-		}
-		cout << "  " << setw(m_pathLength);
-		if(i.first.size() > MAX_LENGTH_OF_PATH) {
-			cout << i.first.substr(0, MAX_LENGTH_OF_PATH - 3) + "...";
-		} else {
-			cout << i.first;
-		}
-		cout << "  " << setw(26) << strTime << "  " << setw(9);  //9 = max{size("directory"), size("regular")}
-		i.second->type == file_type::ft_dir ? cout << "directory" : cout << "regular";
-		cout << "  " << setw(20) << i.second->size << endl;  // name -- path -- time -- type -- size  // 20 - length of max uint64_t (18446744073709551615)
+		InfoOutput(i.second, m_nameLength, m_pathLength);
 	}
 }
 
@@ -173,25 +177,7 @@ void FileIndexer::PrintFilesSorted(SortingType type) {
 		sort(buf.begin(), buf.end(), SizeCmp);
 	}
 	for(const shared_ptr<file_info>& i: buf) {
-		time_t t = i->mtime;
-		string strTime = ctime(&t);
-		strTime.erase(strTime.find('\n'));
-		cout.setf(ios::left);
-		cout << setw(m_nameLength);
-		if(i->name.size() > MAX_LENGTH_OF_NAME) {
-			cout << i->name.substr(0, MAX_LENGTH_OF_NAME - 3) + "...";
-		} else {
-			cout << i->name;
-		}
-		cout << "  " << setw(m_pathLength);
-		if(i->path.size() > MAX_LENGTH_OF_PATH) {
-			cout << i->path.substr(0, MAX_LENGTH_OF_PATH - 3) + "...";
-		} else {
-			cout << i->path;
-		}
-		cout << "  " << setw(26) << strTime << "  " << setw(9);
-		i->type == file_type::ft_dir ? cout << "directory" : cout << "regular";
-		cout << "  " << setw(20) << i->size << endl;
+		InfoOutput(i, m_nameLength, m_pathLength);
 	}
 }
 
@@ -222,26 +208,7 @@ unsigned FileIndexer::FindFiles(const std::string &pattern) {
 	unsigned count = 0;
 	for( auto i: m_index) {
 		if(i.second->path.find(pattern) != string::npos) {
-			time_t t = i.second->mtime;
-			string strTime = ctime(&t);
-			strTime.erase(strTime.find('\n'));
-			cout.setf(ios::left);
-			cout << setw(m_nameLength);
-			if(i.second->name.size() > MAX_LENGTH_OF_NAME) {
-				cout << i.second->name.substr(0, MAX_LENGTH_OF_NAME - 3) + "...";
-			} else {
-				cout << i.second->name;
-			}
-			cout << "  " << setw(m_pathLength);
-			if(i.first.size() > MAX_LENGTH_OF_PATH) {
-				cout << i.first.substr(0, MAX_LENGTH_OF_PATH - 3) + "...";
-			} else {
-				cout << i.first;
-			}
-			cout << "  " << setw(26) << strTime << "  " << setw(9);
-			i.second->type == file_type::ft_dir ? cout << "directory" : cout << "regular";
-			cout << "  " << setw(20) << i.second->size << endl;
-			count++;
+			InfoOutput(i.second, m_nameLength, m_pathLength);
 		}
 	}
 	return count;
