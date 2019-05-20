@@ -58,7 +58,7 @@ vector<file_info*> read_directory(string path)
 	HANDLE hFind = FindFirstFile((path + '*').c_str(), &fd);
 	if (hFind == INVALID_HANDLE_VALUE)
 		return vector<file_info*>();
-
+    
 	vector<file_info*> vec;
 	do {
 		file_info *info = new file_info;
@@ -182,9 +182,16 @@ void FileIndexer::PrintFilesSorted(SortingType type) {
 }
 
 bool FileIndexer::DeleteFile_(const std::string &path) {
-	unsigned size = m_index.size();
-	m_index.erase(path);
-	if(m_index.size() != size) {
+	if(m_index.count(path)) {
+		if(m_index[path]->type == file_type::ft_dir) {
+			auto it1 = m_index.lower_bound(path);
+			string path2 = path;
+			path2[path.length() - 1] += 1;
+			auto it2 = m_index.lower_bound(path2);
+			m_index.erase(it1, it2);
+		} else {
+			m_index.erase(path);
+		}
 		pair<unsigned, unsigned> max = MaxLength(m_index);
 		m_pathLength = max.first;
 		m_nameLength = max.second;
